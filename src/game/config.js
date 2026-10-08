@@ -149,6 +149,8 @@ export const LEVEL_MUSIC = {
     artist: 'Blessed Extinction',
     bandcampTrackId: '1140706104',
     url: 'https://blessedextinction1.bandcamp.com/track/incorruptible-cadav-rico',
+    // If this file exists it autoplays (with our own pause button) instead of the Bandcamp embed.
+    file: 'assets/audio/music/incorruptible-cadaverico.mp3',
   },
 };
 

@@ -211,3 +211,11 @@ code { color: var(--rust); }
 .bc-frame iframe { border: 0; width: min(300px, 60vw); height: 42px; display: block; }
 @media (max-width: 640px) { .bc-player { top: auto; bottom: 150px; } }
 .panel h3.sub { margin: 4px 0 0; color: var(--rust); letter-spacing: 3px; font-size: 1rem; }
+.bc-player.local .bc-toggle { width: auto; padding: 0 8px; font-size: 0.85rem; }
+.bc-title { font-size: 0.75rem; letter-spacing: 1px; color: var(--ash); background: rgba(0, 0, 0, 0.55); padding: 3px 6px; }
+/* Mobile: keep the player at the top, beside the pause button, away from the touch pedals */
+@media (max-width: 640px) {
+  .bc-player { top: 152px; bottom: auto; left: 50%; transform: translateX(-50%); flex-direction: row; align-items: center; }
+  .bc-player.open .bc-frame, .bc-frame iframe { width: min(260px, 70vw); }
+  .bc-title { display: none; }
+}

@@ -4,7 +4,7 @@ import { audio } from '../game/AudioManager.js';
 import GameHUD from './GameHUD.jsx';
 import TouchControls from './TouchControls.jsx';
 import PauseMenu from './PauseMenu.jsx';
-import BandcampPlayer from './BandcampPlayer.jsx';
+import LevelMusic from './LevelMusic.jsx';
 import GamepadMenu from './GamepadMenu.jsx';
 import { LEVEL_MUSIC } from '../game/config.js';
 
@@ -70,7 +70,7 @@ export default function GameView({ options, onEnd, onRestart, onMenu }) {
       {hud && <GameHUD hud={hud} />}
       <GamepadMenu onStart={togglePause} />
       <button className="pause-btn" onClick={togglePause} aria-label="Pause">❚❚</button>
-      {options.musicSource === 'bandcamp' && LEVEL_MUSIC[1] && <BandcampPlayer track={LEVEL_MUSIC[1]} />}
+      {options.musicSource === 'bandcamp' && LEVEL_MUSIC[1] && <LevelMusic track={LEVEL_MUSIC[1]} />}
       {showTouch && hud && <TouchControls input={engineRef.current.input} />}
       {paused && (
         <PauseMenu

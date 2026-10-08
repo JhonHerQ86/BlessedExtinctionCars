@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 
 /**
  * Level music via Bandcamp's official embedded player.
- * Privacy: the Bandcamp iframe (which brings Bandcamp's own analytics) is NOT
- * loaded until the player presses ♫. After that it stays mounted so the music
- * keeps playing while the panel is collapsed. Play / pause with its own button.
+ * Shown open as soon as the race starts. Browsers do not allow a site to start
+ * a cross-origin Bandcamp iframe, so the first play needs a tap on its ▶.
+ * The iframe stays mounted so music keeps playing when the panel is collapsed.
  */
 export default function BandcampPlayer({ track }) {
-  const [open, setOpen] = useState(false);
-  const [loaded, setLoaded] = useState(false);
+  const [open, setOpen] = useState(true);
+  const [loaded, setLoaded] = useState(true);
   const src = `https://bandcamp.com/EmbeddedPlayer/track=${track.bandcampTrackId}/size=small/bgcol=0b0606/linkcol=b3121b/transparent=true/`;
   return (
     <div className={`bc-player ${open ? 'open' : ''}`}>

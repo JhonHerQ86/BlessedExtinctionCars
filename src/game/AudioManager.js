@@ -281,14 +281,8 @@ export class AudioManager {
   /** Dark synth "death metal" loop: distorted palm-muted chugs + drone + kick. */
   /** Streams the user playlist through an <audio> element (no full decode needed). */
   playPlaylist() {
-    if (!this.musicEl) {
-      this.musicEl = new Audio();
-      this.musicEl.crossOrigin = 'anonymous';
-      this.ctx.createMediaElementSource(this.musicEl).connect(this.musicGain);
-      this.musicEl.addEventListener('ended', () => this.nextTrack());
-      this.musicEl.addEventListener('error', () => this.nextTrack());
-      this.order = [];
-    }
+    this.ensureMusicEl();
+    this.musicEl.loop = false;
     this.nextTrack();
   }
 
@@ -297,6 +291,41 @@ export class AudioManager {
     if (!this.order.length) this.order = this.playlist.slice().sort(() => Math.random() - 0.5);
     this.musicEl.src = `${BASE}assets/audio/music/${encodeURIComponent(this.order.shift())}`;
     this.musicEl.play().catch(() => {});
+  }
+
+  /** Ensure the shared <audio> element exists and is routed through the music volume. */
+  ensureMusicEl() {
+    if (this.musicEl) return;
+    this.musicEl = new Audio();
+    this.musicEl.crossOrigin = 'anonymous';
+    this.ctx.createMediaElementSource(this.musicEl).connect(this.musicGain);
+    this.musicEl.addEventListener('ended', () => { if (!this.musicEl.loop) this.nextTrack(); });
+    this.order = [];
+  }
+
+  /** Level track from a local file: loops, autoplays on race start. Resolves true if it exists. */
+  async playLevelTrack(path) {
+    if (!this.ctx) return false;
+    try {
+      const r = await fetch(`${BASE}${path}`, { method: 'HEAD' });
+      if (!r.ok || !(r.headers.get('content-type') || '').includes('audio')) return false;
+    } catch { return false; }
+    this.ensureMusicEl();
+    this.musicEl.loop = true;
+    this.musicEl.src = `${BASE}${path}`;
+    this.musicPlaying = true;
+    this.trackPaused = false;
+    await this.musicEl.play().catch(() => {});
+    return true;
+  }
+
+  /** Toggle the level track (our own pause button). Returns true if now playing. */
+  toggleLevelTrack() {
+    if (!this.musicEl) return false;
+    this.trackPaused = !this.trackPaused;
+    if (this.trackPaused) this.musicEl.pause();
+    else this.musicEl.play().catch(() => {});
+    return !this.trackPaused;
   }
 
   startMusic() {
@@ -398,7 +427,7 @@ export class AudioManager {
   }
 
   suspend() { if (this.ctx) this.ctx.suspend(); if (this.musicEl && this.musicPlaying) this.musicEl.pause(); }
-  resume() { if (this.ctx) this.ctx.resume(); if (this.musicEl && this.musicPlaying) this.musicEl.play().catch(() => {}); }
+  resume() { if (this.ctx) this.ctx.resume(); if (this.musicEl && this.musicPlaying && !this.trackPaused) this.musicEl.play().catch(() => {}); }
 }
 
 /** Single shared instance used by React UI and the engine. */

@@ -153,7 +153,7 @@ The segment themes in `RoadGenerator.js` (`THEMES`) control decoration and obsta
   - To change the song, edit `LEVEL_MUSIC` in `src/game/config.js`. Get the track id from Bandcamp's *Share / Embed* option.
 - **OPTIONS → Music** chooses the music source: `BANDCAMP`, `SYNTH` (built-in metal loop) or `OFF`.
 - **Your own MP3 playlist**: put the files in `public/assets/audio/music/` and list them in `playlist.json`, for example `["song1.mp3","song2.mp3"]`. The playlist plays when Music is set to SYNTH, in shuffled order. Only use tracks you have the rights to.
-- **Nitro voice**: when you use the nitro, a voice shouts *"Blessed Extinction!"* or *"Yeah man!"*. The clips are `public/assets/audio/nitro_blessed.mp3` and `nitro_yeah.mp3`, generated with espeak-ng and processed with ffmpeg (pitch, distortion, echo). Replace them with your own recordings, using the same file names, to get a real human shout. If the files are missing, the game falls back to the browser's speech synthesis, which is often silent on Linux.
+- **Nitro voice**: when you use the nitro, a voice shouts *"Blessed Extinction!"* or *"¡Gonorrea!"*. The clips are `public/assets/audio/nitro_blessed.mp3` and `nitro_gonorrea.mp3`, generated with espeak-ng and processed with ffmpeg (pitch, distortion, echo). Replace them with your own recordings, using the same file names, to get a real human shout. If the files are missing, the game falls back to the browser's speech synthesis, which is often silent on Linux.
 
 ---
 

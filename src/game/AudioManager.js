@@ -6,7 +6,7 @@
  *   music.mp3      looping background music (replaces synth metal loop)
  *   crash.mp3      explosion.mp3   pickup.mp3   splat.mp3   zombie.mp3
  *   brake.mp3      beep.mp3        go.mp3
- *   nitro_blessed.mp3 / nitro_yeah.mp3   shouted voice lines for the nitro
+ *   nitro_blessed.mp3 / nitro_gonorrea.mp3   shouted voice lines for the nitro
  *
  * MUSIC PLAYLIST (e.g. tracks downloaded from your Bandcamp purchases/uploads):
  *   put the .mp3 files in public/assets/audio/music/ and list them in
@@ -15,8 +15,8 @@
  */
 
 const BASE = import.meta.env.BASE_URL || './';
-const FILES = ['music', 'crash', 'explosion', 'pickup', 'splat', 'zombie', 'brake', 'beep', 'go', 'nitro_blessed', 'nitro_yeah'];
-const VOICE_LINES = [['nitro_blessed', 'Blessed Extinction!'], ['nitro_yeah', 'Yeah man!']];
+const FILES = ['music', 'crash', 'explosion', 'pickup', 'splat', 'zombie', 'brake', 'beep', 'go', 'nitro_blessed', 'nitro_gonorrea'];
+const VOICE_LINES = [['nitro_blessed', 'Blessed Extinction!'], ['nitro_gonorrea', '¡Gonorrea!']];
 
 export class AudioManager {
   constructor() {

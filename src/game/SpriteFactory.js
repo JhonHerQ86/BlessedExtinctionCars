@@ -51,7 +51,7 @@ export class SpriteFactory {
         img.onload = () => {
           this.images[`${folder}/${key}`] = img;
         };
-        img.src = `${BASE}assets/${folder}/${key}.png`;
+        img.src = `${BASE}assets/${folder}/${key}.png?v=${__BUILD_ID__}`;
       }
     }
   }

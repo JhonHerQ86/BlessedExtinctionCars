@@ -15,6 +15,7 @@
  */
 
 const BASE = import.meta.env.BASE_URL || './';
+const V = `?v=${__BUILD_ID__}`; // cache-buster: new build → fresh audio files
 const FILES = ['music', 'crash', 'explosion', 'pickup', 'splat', 'zombie', 'brake', 'beep', 'go', 'nitro_blessed', 'nitro_gonorrea'];
 const VOICE_LINES = [['nitro_blessed', 'Blessed Extinction!'], ['nitro_gonorrea', '¡Gonorrea!']];
 
@@ -64,12 +65,12 @@ export class AudioManager {
 
   loadFiles() {
     this.playlist = [];
-    this.playlistReady = fetch(`${BASE}assets/audio/music/playlist.json`)
+    this.playlistReady = fetch(`${BASE}assets/audio/music/playlist.json${V}`)
       .then((r) => (r.ok && (r.headers.get('content-type') || '').includes('json') ? r.json() : []))
       .then((list) => { this.playlist = Array.isArray(list) ? list.filter((f) => typeof f === 'string') : []; })
       .catch(() => {});
     for (const name of FILES) {
-      fetch(`${BASE}assets/audio/${name}.mp3`)
+      fetch(`${BASE}assets/audio/${name}.mp3${V}`)
         .then((r) => {
           if (!r.ok || !(r.headers.get('content-type') || '').includes('audio')) throw new Error('missing');
           return r.arrayBuffer();
@@ -307,7 +308,7 @@ export class AudioManager {
   async playLevelTrack(path) {
     if (!this.ctx) return false;
     try {
-      const r = await fetch(`${BASE}${path}`, { method: 'HEAD' });
+      const r = await fetch(`${BASE}${path}${V}`, { method: 'HEAD' });
       if (!r.ok || !(r.headers.get('content-type') || '').includes('audio')) return false;
     } catch { return false; }
     this.ensureMusicEl();
